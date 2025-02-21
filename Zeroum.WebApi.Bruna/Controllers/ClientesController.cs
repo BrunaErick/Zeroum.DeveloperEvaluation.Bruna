@@ -31,7 +31,7 @@ namespace Zeroum.WebApi.Bruna.Controllers
                 return Created(string.Empty, new 
                 {
                     Success = true,
-                    Message = "Client PJ created successfully",
+                    Message = "Client PJ created/updated successfully",
                     Data = "Id: " + (int)response.Result
             });
             }
@@ -61,7 +61,7 @@ namespace Zeroum.WebApi.Bruna.Controllers
                 return Created(string.Empty, new
                 {
                     Success = true,
-                    Message = "Client PF created successfully",
+                    Message = "Client PF created/updated successfully",
                     Data = "Id: " + (int)response.Result
                 });
             }
@@ -131,7 +131,7 @@ namespace Zeroum.WebApi.Bruna.Controllers
         [HttpGet("getByIdForEditPJ/{id}")]
         public async Task<IActionResult> getByIdForEditPJ([FromRoute] int id)
         {
-            var response = _business.GetByIdForEditPJAsync(id);
+            var response = _business.GetByIdForEditPJAsync(id);         
 
             if (!string.IsNullOrEmpty((response.Result).razaoSocial))
                 return Ok(new 

@@ -11,6 +11,8 @@ namespace Zeroum.DAL.Bruna.Interfaces
         Task<ClientesPJResponse> GetByIdForEditPJAsync(int id);
         Task<List<ClientesPFResponse>> GetAllClientsPFAsync();
         Task<List<ClientesPJResponse>> GetAllClientsPJAsync();
+        Task<ClientesPJResponse> GetBycnpjForEditPJAsync(string cnpj);
+        Task<ClientesPFResponse> GetBycpfForEditPFAsync(string cpf);
         Task<bool> DeleteClientPJAsync(int id);
         Task<bool> DeleteClientPFAsync(int id);
     }

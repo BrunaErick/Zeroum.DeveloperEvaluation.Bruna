@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
+<script src="~/js/jquery-3.6.0.min.js"></script>
 <div class="text-center">
     <h1 class="display-4">Cadastro de Clientes</h1>
     <p>Cadastre seus clientes abaixo.</p>
@@ -122,242 +122,263 @@
 </table>
 
 <script>
-    // Função para enviar o formulário de Cliente PJ
-    document.getElementById('formClientePJ').addEventListener('submit', async function (event) {
-        event.preventDefault();
-
-        const clientePJData = {
-            cnpj: document.getElementById('cnpj').value,
-            razaoSocial: document.getElementById('razaoSocial').value,
-            nomeFantasia: document.getElementById('nomeFantasia').value,
-            email: document.getElementById('emailPJ').value,
-            dataAbertura: document.getElementById('dataAbertura').value
-        };
-
-        try {
-            const response = await fetch('/CreateOrEditClientPJ', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(clientePJData)
-            });
-
-            const result = await response.json();
-            if (response.ok) {
-                alert('Cliente PJ cadastrado com sucesso!');
-                loadClientsPJ(); // Carrega novamente os clientes PJ após cadastro
-            } else {
-                alert('Erro: ' + result.Message);
-            }
-        } catch (error) {
-            console.error('Erro ao cadastrar Cliente PJ:', error);
-            alert('Erro ao cadastrar Cliente PJ');
-        }
-    });
-
+    
     // Função para enviar o formulário de Cliente PF
-    document.getElementById('formClientePF').addEventListener('submit', async function (event) {
+    $('#formClientePF').on('submit', function (event) {
         event.preventDefault();
 
         const clientePFData = {
-            nome: document.getElementById('nome').value,
-            cpf: document.getElementById('cpf').value,
-            rg: document.getElementById('rg').value,
-            email: document.getElementById('emailPF').value,
-            telefone: document.getElementById('telefone').value,
-            nascimento: document.getElementById('nascimento').value
+            nome: $('#nome').val(),
+            cpf: $('#cpf').val(),
+            rg: $('#rg').val(),
+            email: $('#emailPF').val(),
+            telefone: $('#telefone').val(),
+            nascimento: $('#nascimento').val()
         };
 
-        try {
-            const response = await fetch('/CreateOrEditClientPF', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(clientePFData)
-            });
-
-            const result = await response.json();
-            if (response.ok) {
-                alert('Cliente PF cadastrado com sucesso!');
-                loadClientsPF(); // Carrega novamente os clientes PF após cadastro
-            } else {
-                alert('Erro: ' + result.Message);
+        $.ajax({
+            url: 'https://localhost:7014/Clients/CreateOrEditClientPF',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(clientePFData),
+            success: function (result) {
+                if (result.success) {
+                    alert('Cliente PF cadastrado com sucesso!');
+                    loadClientsPF(); // Carrega novamente os clientes PF após cadastro
+                } else {
+                    alert('Erro: ' + result.Message);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Erro ao cadastrar Cliente PF:', error);
+                alert('Erro ao cadastrar Cliente PF');
             }
-        } catch (error) {
-            console.error('Erro ao cadastrar Cliente PF:', error);
-            alert('Erro ao cadastrar Cliente PF');
-        }
+        });
     });
 
+    // Função para enviar o formulário de Cliente PJ
+    $('#formClientePJ').on('submit', function (event) {
+        event.preventDefault();
+
+        const clientePJData = {
+            cnpj: $('#cnpj').val(),
+            razaoSocial: $('#razaoSocial').val(),
+            nomeFantasia: $('#nomeFantasia').val(),
+            email: $('#emailPJ').val(),
+            dataAbertura: $('#dataAbertura').val()
+        };
+
+        $.ajax({
+            url: 'https://localhost:7014/Clients/CreateOrEditClientPJ',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(clientePJData),
+            success: function (result) {
+                if (result.success) {
+                    alert('Cliente PJ cadastrado com sucesso!');
+                    loadClientsPJ(); // Carrega novamente os clientes PJ após cadastro
+                } else {
+                    alert('Erro: ' + result.Message);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Erro ao cadastrar Cliente PJ:', error);
+                alert('Erro ao cadastrar Cliente PJ');
+            }
+        });
+    });
+
+
     // Função para carregar os clientes PJ no grid
-    async function loadClientsPJ() {
-        try {
-            const response = await fetch('/GetAllClientPJ');
-            const result = await response.json();
-            const grid = document.getElementById('gridClientePJ').getElementsByTagName('tbody')[0];
-            grid.innerHTML = ''; // Limpa o grid antes de adicionar novos dados
+    function loadClientsPJ() {
+        $.ajax({
+            url: 'https://localhost:7014/Clients/GetAllClientPJ',
+            method: 'GET',
+            success: function (response) {
+               
+                if (response.success) {
+                    const grid = document.getElementById('gridClientePJ').getElementsByTagName('tbody')[0];
+                    grid.innerHTML = ''; // Limpa o grid antes de adicionar novos dados
 
-            if (response.ok) {
-                result.Data.forEach(client => {
-                    const row = grid.insertRow();
-                    row.insertCell(0).textContent = client.id;
-                    row.insertCell(1).textContent = client.cnpj;
-                    row.insertCell(2).textContent = client.razaoSocial;
-                    row.insertCell(3).textContent = client.nomeFantasia;
-                    row.insertCell(4).textContent = client.email;
-                    row.insertCell(5).textContent = client.dataAbertura;
-                    const actionsCell = row.insertCell(6);
-                    const deleteButton = document.createElement('button');
-                    deleteButton.textContent = 'Excluir';
-                    deleteButton.classList.add('btn', 'btn-danger');
-                    deleteButton.addEventListener('click', () => deleteClientPJ(client.id));
-                    actionsCell.appendChild(deleteButton);
+                    response.data.forEach(client => {
+                        const row = grid.insertRow();
 
-                    const editButton = document.createElement('button');
-                    editButton.textContent = 'Editar';
-                    editButton.classList.add('btn', 'btn-warning');
-                    editButton.addEventListener('click', () => editClientPJ(client.id));
-                    actionsCell.appendChild(editButton);
-                });
-            } else {
-                alert('Nenhum cliente PJ encontrado.');
+                        // Preenche as células com os dados do cliente
+                        row.insertCell(0).textContent = client.id;
+                        row.insertCell(1).textContent = client.cnpj;
+                        row.insertCell(2).textContent = client.razaoSocial;
+                        row.insertCell(3).textContent = client.nomeFantasia;
+                        row.insertCell(4).textContent = client.email;
+                        row.insertCell(5).textContent = client.dataAbertura;
+
+                        // Adiciona o botão de excluir
+                        const actionsCell = row.insertCell(6);
+                        const deleteButton = document.createElement('button');
+                        deleteButton.textContent = 'Excluir';
+                        deleteButton.classList.add('btn', 'btn-danger');
+                        deleteButton.addEventListener('click', () => deleteClientPJ(client.id));
+                        actionsCell.appendChild(deleteButton);
+
+                        // Adiciona o botão de editar
+                        const editButton = document.createElement('button');
+                        editButton.textContent = 'Editar';
+                        editButton.classList.add('btn', 'btn-warning');
+                        editButton.addEventListener('click', () => editClientPJ(client.id));
+                        actionsCell.appendChild(editButton);
+                    });
+                } else {
+                    alert('Nenhum cliente PJ encontrado.');
+                }
+            },
+            error: function (error) {
+                alert('Erro ao carregar Clientes PJ:' + JSON.stringify(error));
             }
-        } catch (error) {
-            console.error('Erro ao carregar Clientes PJ:', error);
-        }
+        });
     }
 
-    // Função para carregar os clientes PF no grid
-    async function loadClientsPF() {
-        try {
-            const response = await fetch('/GetAllClientPF');
-            const result = await response.json();
-            const grid = document.getElementById('gridClientePF').getElementsByTagName('tbody')[0];
-            grid.innerHTML = ''; // Limpa o grid antes de adicionar novos dados
 
-            if (response.ok) {
-                result.Data.forEach(client => {
-                    const row = grid.insertRow();
-                    row.insertCell(0).textContent = client.id;
-                    row.insertCell(1).textContent = client.nome;
-                    row.insertCell(2).textContent = client.cpf;
-                    row.insertCell(3).textContent = client.rg;
-                    row.insertCell(4).textContent = client.email;
-                    row.insertCell(5).textContent = client.telefone;
-                    row.insertCell(6).textContent = client.nascimento;
-                    const actionsCell = row.insertCell(7);
-                    const deleteButton = document.createElement('button');
-                    deleteButton.textContent = 'Excluir';
-                    deleteButton.classList.add('btn', 'btn-danger');
-                    deleteButton.addEventListener('click', () => deleteClientPF(client.id));
-                    actionsCell.appendChild(deleteButton);
+    // Função para carregar os clientes PF no grid usando AJAX
+    function loadClientsPF() {
+        $.ajax({
+            url: 'https://localhost:7014/Clients/GetAllClientPF',
+            type: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                const grid = document.getElementById('gridClientePF').getElementsByTagName('tbody')[0];
+                grid.innerHTML = ''; // Limpa o grid antes de adicionar novos dados
 
-                    const editButton = document.createElement('button');
-                    editButton.textContent = 'Editar';
-                    editButton.classList.add('btn', 'btn-warning');
-                    editButton.addEventListener('click', () => editClientPF(client.id));
-                    actionsCell.appendChild(editButton);
-                });
-            } else {
-                alert('Nenhum cliente PF encontrado.');
+                if (result.success) {
+                    result.data.forEach(client => {
+                        const row = grid.insertRow();
+                        row.insertCell(0).textContent = client.id;
+                        row.insertCell(1).textContent = client.nome;
+                        row.insertCell(2).textContent = client.cpf;
+                        row.insertCell(3).textContent = client.rg;
+                        row.insertCell(4).textContent = client.email;
+                        row.insertCell(5).textContent = client.telefone;
+                        row.insertCell(6).textContent = client.nascimento;
+                        const actionsCell = row.insertCell(7);
+                        const deleteButton = document.createElement('button');
+                        deleteButton.textContent = 'Excluir';
+                        deleteButton.classList.add('btn', 'btn-danger');
+                        deleteButton.addEventListener('click', () => deleteClientPF(client.id));
+                        actionsCell.appendChild(deleteButton);
+
+                        const editButton = document.createElement('button');
+                        editButton.textContent = 'Editar';
+                        editButton.classList.add('btn', 'btn-warning');
+                        editButton.addEventListener('click', () => editClientPF(client.id));
+                        actionsCell.appendChild(editButton);
+                    });
+                } else {
+                    alert('Nenhum cliente PF encontrado.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Erro ao carregar Clientes PF:', error);
             }
-        } catch (error) {
-            console.error('Erro ao carregar Clientes PF:', error);
-        }
+        });
     }
+
 
     // Função para excluir Cliente PJ
-    async function deleteClientPJ(id) {
+    function deleteClientPJ(id) {
         if (confirm('Tem certeza que deseja excluir este cliente PJ?')) {
-            try {
-                const response = await fetch(`/DeleteClientPJ/${id}`, {
-                        method: 'DELETE',
-                    });
-
-                const result = await response.json();
-                if (response.ok) {
-                    alert('Cliente PJ excluído com sucesso!');
-                    loadClientsPJ(); // Recarrega a lista de clientes PJ
-                } else {
-                    alert('Erro ao excluir Cliente PJ: ' + result.Message);
+            $.ajax({
+                url: `https://localhost:7014/Clients/DeleteClientPJ/${id}`,
+                type: 'DELETE',
+                success: function (result) {
+                    if (result.success) {
+                        alert('Cliente PJ excluído com sucesso!');
+                        loadClientsPJ(); // Recarrega a lista de clientes PJ
+                    } else {
+                        alert('Erro ao excluir Cliente PJ: ' + result.Message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Erro ao excluir Cliente PJ:', error);
+                    alert('Erro ao excluir Cliente PJ');
                 }
-            } catch (error) {
-                console.error('Erro ao excluir Cliente PJ:', error);
-                alert('Erro ao excluir Cliente PJ');
-            }
+            });
         }
     }
 
     // Função para excluir Cliente PF
-    async function deleteClientPF(id) {
+    function deleteClientPF(id) {
         if (confirm('Tem certeza que deseja excluir este cliente PF?')) {
-            try {
-                const response = await fetch(`/DeleteClientPF/${id}`, {
-                    method: 'DELETE',
-                });
-
-                const result = await response.json();
-                if (response.ok) {
-                    alert('Cliente PF excluído com sucesso!');
-                    loadClientsPF(); // Recarrega a lista de clientes PF
-                } else {
-                    alert('Erro ao excluir Cliente PF: ' + result.Message);
+            $.ajax({
+                url: `https://localhost:7014/Clients/DeleteClientPF/${id}`,
+                type: 'DELETE',
+                success: function (result) {
+                    if (result.success) {
+                        alert('Cliente PF excluído com sucesso!');
+                        loadClientsPF(); // Recarrega a lista de clientes PF
+                    } else {
+                        alert('Erro ao excluir Cliente PF: ' + result.Message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Erro ao excluir Cliente PF:', error);
+                    alert('Erro ao excluir Cliente PF');
                 }
-            } catch (error) {
-                console.error('Erro ao excluir Cliente PF:', error);
-                alert('Erro ao excluir Cliente PF');
-            }
+            });
         }
     }
 
     // Função para editar Cliente PJ
-    async function editClientPJ(id) {
-        try {
-            const response = await fetch(`/getByIdForEditPJ/${id}`);
-            const result = await response.json();
-            if (response.ok) {
-                const client = result.Data;
-                // Preenche o formulário de Cliente PJ com os dados do cliente
-                document.getElementById('cnpj').value = client.cnpj;
-                document.getElementById('razaoSocial').value = client.razaoSocial;
-                document.getElementById('nomeFantasia').value = client.nomeFantasia;
-                document.getElementById('emailPJ').value = client.email;
-                document.getElementById('dataAbertura').value = client.dataAbertura;
-                alert('Cliente PJ encontrado para edição.');
-            } else {
-                alert('Cliente PJ não encontrado.');
+    function editClientPJ(id) {
+        $.ajax({
+            url: `https://localhost:7014/Clients/getByIdForEditPJ/${id}`,
+            type: 'GET',
+            success: function (result) {
+                if (result.success) {
+                    const client = result.data;
+                    // Preenche o formulário de Cliente PJ com os dados do cliente
+                    document.getElementById('cnpj').value = client.cnpj;
+                    document.getElementById('razaoSocial').value = client.razaoSocial;
+                    document.getElementById('nomeFantasia').value = client.nomeFantasia;
+                    document.getElementById('emailPJ').value = client.email;
+                    document.getElementById('dataAbertura').value = client.dataAbertura;
+                    alert('Cliente PJ encontrado para edição.');
+                } else {
+                    alert('Cliente PJ não encontrado.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Erro ao carregar Cliente PJ para edição:', error);
+                alert('Erro ao carregar Cliente PJ para edição');
             }
-        } catch (error) {
-            console.error('Erro ao carregar Cliente PJ para edição:', error);
-            alert('Erro ao carregar Cliente PJ para edição');
-        }
+        });
     }
 
     // Função para editar Cliente PF
-    async function editClientPF(id) {
-        try {
-            const response = await fetch(`/getByIdForEditPF/${id}`);
-            const result = await response.json();
-            if (response.ok) {
-                const client = result.Data;
-                // Preenche o formulário de Cliente PF com os dados do cliente
-                document.getElementById('nome').value = client.nome;
-                document.getElementById('cpf').value = client.cpf;
-                document.getElementById('rg').value = client.rg;
-                document.getElementById('emailPF').value = client.email;
-                document.getElementById('telefone').value = client.telefone;
-                document.getElementById('nascimento').value = client.nascimento;
-                alert('Cliente PF encontrado para edição.');
-            } else {
-                alert('Cliente PF não encontrado.');
+    function editClientPF(id) {
+        $.ajax({
+            url: `https://localhost:7014/Clients/getByIdForEditPF/${id}`,
+            type: 'GET',
+            success: function (result) {
+                if (result.success) {
+                    const client = result.data;
+                    alert(JSON.stringify(client));
+                    // Preenche o formulário de Cliente PF com os dados do cliente
+                    document.getElementById('nome').value = client.nome;
+                    document.getElementById('cpf').value = client.cpf;
+                    document.getElementById('rg').value = client.rg;
+                    document.getElementById('emailPF').value = client.email;
+                    document.getElementById('telefone').value = client.telefone;
+                    document.getElementById('nascimento').value = client.nascimento;
+                    alert('Cliente PF encontrado para edição.');
+                } else {
+                    alert('Cliente PF não encontrado.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Erro ao carregar Cliente PF para edição:', error);
+                alert('Erro ao carregar Cliente PF para edição');
             }
-        } catch (error) {
-            console.error('Erro ao carregar Cliente PF para edição:', error);
-            alert('Erro ao carregar Cliente PF para edição');
-        }
+        });
     }
+
 
     // Carrega os clientes PJ e PF na página ao carregar 
     loadClientsPJ();

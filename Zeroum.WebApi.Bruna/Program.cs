@@ -30,6 +30,9 @@ builder.Services.AddScoped<IClientesRepository, ClientesRepository>();
 
 var app = builder.Build();
 
+// Aplica a política de CORS
+app.UseCors("AllowAllOrigins");
+
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<DbContext>();
@@ -43,9 +46,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+

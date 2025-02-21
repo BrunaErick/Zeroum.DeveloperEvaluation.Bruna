@@ -31,24 +31,43 @@ namespace Zeroum.DAL.Bruna.Repository
         public async Task<int> CreateOrEditClientPJAsync(ClientesPJCreateRequest request)
         {
             var connectionstring = _appSettings.GetConnectionString("DefaultConnection");
+            var cliente = GetBycnpjForEditPJAsync(request.cnpj);
             var id = 0;
-            try
+            var sqlQuery = "";
+
+            if (string.IsNullOrEmpty(cliente.Result.razaoSocial))
             {
-                var sqlQuery = @" Insert into  [Zeroum].[dbo].[ClientesPj] 
-            (
+                sqlQuery = @" Insert into  [Zeroum].[dbo].[ClientesPj] 
+                (
                 [cnpj] 
                 ,[razaoSocial] 
                 ,[nomeFantasia] 
                 ,[email] 
                 ,[dataAbertura]
-            ) 
-            OUTPUT INSERTED.Id
-             values(
-                @cnpj
-                ,@razaoSocial
-                ,@nomeFantasia
-                ,@email
-                ,@dataAbertura)";
+                ) 
+                OUTPUT INSERTED.Id
+                 values(
+                    @cnpj
+                    ,@razaoSocial
+                    ,@nomeFantasia
+                    ,@email
+                    ,@dataAbertura)";
+
+            }
+            else 
+            {
+                sqlQuery = @" Update [Zeroum].[dbo].[ClientesPj] SET                
+                 [razaoSocial] = @razaoSocial
+                ,[nomeFantasia] = @nomeFantasia
+                ,[email] = @email
+                ,[dataAbertura] = @dataAbertura                                
+                WHERE  [cnpj]  = @cnpj
+                ";
+            }
+
+            try
+            {
+           
 
                 using (SqlConnection connection = new SqlConnection(connectionstring))
                 {
@@ -62,7 +81,14 @@ namespace Zeroum.DAL.Bruna.Repository
                         command.Parameters.AddWithValue("@email", request.email);
                         command.Parameters.AddWithValue("@dataAbertura", request.dataAbertura);
 
-                        id = (int)command.ExecuteScalar();
+                        if (string.IsNullOrEmpty(cliente.Result.razaoSocial))
+                            id = (int)command.ExecuteScalar();
+                        else 
+                        {
+                            command.ExecuteScalar();
+                            id = cliente.Result.Id;
+                        }
+                            
                     }
                 }
 
@@ -83,26 +109,43 @@ namespace Zeroum.DAL.Bruna.Repository
         public async Task<int> CreateOrEditClientPFAsync(ClientesPFCreateRequest request)
         {
             var connectionstring = _appSettings.GetConnectionString("DefaultConnection");
+            var cliente = GetBycpfForEditPFAsync(request.cpf);
             var id = 0;
-            try
+            var sqlQuery = "";
+
+            if (string.IsNullOrEmpty(cliente.Result.nome))
             {
-                var sqlQuery = @" Insert into  [Zeroum].[dbo].[ClientesPf] 
-            (
-                [nome] 
-                ,[cpf] 
-                ,[rg] 
-                ,[email] 
-                ,[telefone]
-                ,[nascimento]
-            ) 
-            OUTPUT INSERTED.Id
-             values(
-                @nome
-                ,@cpf
-                ,@rg
-                ,@email
-                ,@telefone
-                ,@nascimento)";
+                sqlQuery = @" Insert into  [Zeroum].[dbo].[ClientesPf] 
+                (
+                    [nome] 
+                    ,[cpf] 
+                    ,[rg] 
+                    ,[email] 
+                    ,[telefone]
+                    ,[nascimento]
+                ) 
+                OUTPUT INSERTED.Id
+                 values(
+                    @nome
+                    ,@cpf
+                    ,@rg
+                    ,@email
+                    ,@telefone
+                    ,@nascimento)";
+            }
+            else 
+            {
+                sqlQuery = @" Update  [Zeroum].[dbo].[ClientesPf] SET
+                    [nome] = @nome
+                    ,[rg] = @rg
+                    ,[email] = @email
+                    ,[telefone] = @telefone
+                    ,[nascimento] = @nascimento
+                    WHERE  cpf = @cpf
+                    ";
+            }
+            try
+            {               
 
                 using (SqlConnection connection = new SqlConnection(connectionstring))
                 {
@@ -117,7 +160,13 @@ namespace Zeroum.DAL.Bruna.Repository
                         command.Parameters.AddWithValue("@telefone", request.telefone);
                         command.Parameters.AddWithValue("@nascimento", request.nascimento);
 
-                        id = (int)command.ExecuteScalar();
+                        if (string.IsNullOrEmpty(cliente.Result.nome))
+                            id = (int)command.ExecuteScalar();
+                        else 
+                        {
+                            command.ExecuteScalar();
+                            id = cliente.Result.Id;
+                        }
                     }
                 }
 
@@ -233,6 +282,8 @@ namespace Zeroum.DAL.Bruna.Repository
                 // Usando Dapper para executar a consulta e mapear o resultado para um objeto Cliente PF
                 response = connection.QuerySingleOrDefault<ClientesPFResponse>(sqlQuery, new { id });
             }
+            if (response == null)
+                response = new ClientesPFResponse();
 
             return response;
         }
@@ -264,6 +315,77 @@ namespace Zeroum.DAL.Bruna.Repository
                 // Usando Dapper para executar a consulta e mapear o resultado para um objeto Cliente PJ
                 response = connection.QuerySingleOrDefault<ClientesPJResponse>(sqlQuery, new { id });
             }
+
+            if (response == null)
+                response = new ClientesPJResponse();
+
+            return response;
+        }
+
+
+        /// <summary>
+        /// Retrieves a Client PF
+        /// </summary>
+        /// <param name="cpf">The unique identifier of the Client PF</param>
+        public async Task<ClientesPFResponse> GetBycpfForEditPFAsync(string cpf)
+        {
+            var response = new ClientesPFResponse();
+            var connectionstring = _appSettings.GetConnectionString("DefaultConnection");
+
+            var sqlQuery = @"SELECT
+                            [Id]
+                            ,[nome] 
+                            ,[cpf] 
+                            ,[rg] 
+                            ,[email] 
+                            ,[telefone]
+                            ,[nascimento]
+                         FROM [Zeroum].[dbo].[ClientesPF] 
+                         WHERE [cpf] = @cpf";
+
+            using (var connection = new SqlConnection(connectionstring))
+            {
+                connection.Open();
+
+                // Usando Dapper para executar a consulta e mapear o resultado para um objeto Cliente PF
+                response = connection.QuerySingleOrDefault<ClientesPFResponse>(sqlQuery, new { cpf });
+            }
+            if (response == null)
+                response = new ClientesPFResponse();
+
+            return response;
+        }
+
+
+        /// <summary>
+        /// Retrieves a Client PJ
+        /// </summary>
+        /// <param name="cnpj">The unique identifier of the Client PJ</param>
+        public async Task<ClientesPJResponse> GetBycnpjForEditPJAsync(string cnpj)
+        {
+            var response = new ClientesPJResponse();
+            var connectionstring = _appSettings.GetConnectionString("DefaultConnection");
+
+            var sqlQuery = @"SELECT
+                            [Id]
+                            ,[cnpj] 
+                            ,[razaoSocial] 
+                            ,[nomeFantasia] 
+                            ,[email] 
+                            ,[dataAbertura]
+                         FROM [Zeroum].[dbo].[ClientesPJ] 
+                         WHERE[cnpj] = @cnpj";
+
+            using (var connection = new SqlConnection(connectionstring))
+            {
+                connection.Open();
+
+                // Usando Dapper para executar a consulta e mapear o resultado para um objeto Cliente PJ
+                response = connection.QuerySingleOrDefault<ClientesPJResponse>(sqlQuery, new { cnpj });
+            }
+
+            if (response == null)
+                response = new ClientesPJResponse();
 
             return response;
         }
