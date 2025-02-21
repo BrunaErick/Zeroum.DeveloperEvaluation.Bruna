@@ -339,7 +339,7 @@
                     document.getElementById('nomeFantasia').value = client.nomeFantasia;
                     document.getElementById('emailPJ').value = client.email;
                     document.getElementById('dataAbertura').value = client.dataAbertura;
-                    alert('Cliente PJ encontrado para edição.');
+                   
                 } else {
                     alert('Cliente PJ não encontrado.');
                 }
@@ -359,7 +359,7 @@
             success: function (result) {
                 if (result.success) {
                     const client = result.data;
-                    alert(JSON.stringify(client));
+                    
                     // Preenche o formulário de Cliente PF com os dados do cliente
                     document.getElementById('nome').value = client.nome;
                     document.getElementById('cpf').value = client.cpf;
@@ -367,7 +367,7 @@
                     document.getElementById('emailPF').value = client.email;
                     document.getElementById('telefone').value = client.telefone;
                     document.getElementById('nascimento').value = client.nascimento;
-                    alert('Cliente PF encontrado para edição.');
+                   
                 } else {
                     alert('Cliente PF não encontrado.');
                 }
