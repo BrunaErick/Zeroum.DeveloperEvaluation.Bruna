@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zeroum.WebApplication.Bruna", "Zeroum.WebApplication.Bruna\Zeroum.WebApplication.Bruna.csproj", "{B9BB48DA-9285-4427-BCF5-2C8CC4516A2C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zeroum.WebApi.Bruna", "Zeroum.WebApi.Bruna\Zeroum.WebApi.Bruna.csproj", "{6268FF76-822C-4486-94C0-7FB76E65BEE0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zeroum.BI.Bruna", "Zeroum.BI.Bruna\Zeroum.BI.Bruna.csproj", "{04854A00-4050-41E9-A51D-58B494294318}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zeroum.DAL.Bruna", "Zeroum.DAL.Bruna\Zeroum.DAL.Bruna.csproj", "{4EE3ECD1-FE17-4B12-B37C-AD3DF5090BF7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zeroum.DTO.Bruna", "Zeroum.DTO.Bruna\Zeroum.DTO.Bruna.csproj", "{D12D0B03-8FAA-4A56-AFA6-7C82C200E555}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zeroum.UnitTests.Bruna", "Zeroum.UnitTests.Bruna\Zeroum.UnitTests.Bruna.csproj", "{9B133C24-39D6-4DD8-AEDF-2618131CAD26}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B9BB48DA-9285-4427-BCF5-2C8CC4516A2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9BB48DA-9285-4427-BCF5-2C8CC4516A2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9BB48DA-9285-4427-BCF5-2C8CC4516A2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9BB48DA-9285-4427-BCF5-2C8CC4516A2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6268FF76-822C-4486-94C0-7FB76E65BEE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6268FF76-822C-4486-94C0-7FB76E65BEE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6268FF76-822C-4486-94C0-7FB76E65BEE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6268FF76-822C-4486-94C0-7FB76E65BEE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04854A00-4050-41E9-A51D-58B494294318}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04854A00-4050-41E9-A51D-58B494294318}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04854A00-4050-41E9-A51D-58B494294318}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04854A00-4050-41E9-A51D-58B494294318}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EE3ECD1-FE17-4B12-B37C-AD3DF5090BF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EE3ECD1-FE17-4B12-B37C-AD3DF5090BF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EE3ECD1-FE17-4B12-B37C-AD3DF5090BF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EE3ECD1-FE17-4B12-B37C-AD3DF5090BF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D12D0B03-8FAA-4A56-AFA6-7C82C200E555}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D12D0B03-8FAA-4A56-AFA6-7C82C200E555}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D12D0B03-8FAA-4A56-AFA6-7C82C200E555}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D12D0B03-8FAA-4A56-AFA6-7C82C200E555}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B133C24-39D6-4DD8-AEDF-2618131CAD26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B133C24-39D6-4DD8-AEDF-2618131CAD26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B133C24-39D6-4DD8-AEDF-2618131CAD26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B133C24-39D6-4DD8-AEDF-2618131CAD26}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E994B0E4-16FD-42A3-8780-032AC26A8946}
+	EndGlobalSection
+EndGlobal

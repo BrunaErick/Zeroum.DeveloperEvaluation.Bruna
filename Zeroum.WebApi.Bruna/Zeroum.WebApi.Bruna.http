@@ -1,0 +1,6 @@
+@Zerou_.WebApi.Bruna_HostAddress = http://localhost:5068
+
+GET {{Zerou_.WebApi.Bruna_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

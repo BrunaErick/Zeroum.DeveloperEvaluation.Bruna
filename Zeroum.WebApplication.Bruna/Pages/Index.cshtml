@@ -1,0 +1,365 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Cadastro de Clientes</h1>
+    <p>Cadastre seus clientes abaixo.</p>
+</div>
+
+<!-- Formulário de Cliente PJ -->
+<h3>Cadastro Cliente PJ</h3>
+<form id="formClientePJ">
+    <div class="form-group">
+        <label for="cnpj">CNPJ</label>
+        <input type="text" id="cnpj" name="cnpj" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="razaoSocial">Razão Social</label>
+        <input type="text" id="razaoSocial" name="razaoSocial" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="nomeFantasia">Nome Fantasia</label>
+        <input type="text" id="nomeFantasia" name="nomeFantasia" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="emailPJ">Email</label>
+        <input type="email" id="emailPJ" name="emailPJ" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="dataAbertura">Data de Abertura</label>
+        <input type="date" id="dataAbertura" name="dataAbertura" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Cadastrar Cliente PJ</button>
+</form>
+
+<hr>
+
+<!-- Formulário de Cliente PF -->
+<h3>Cadastro Cliente PF</h3>
+<form id="formClientePF">
+    <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="cpf">CPF</label>
+        <input type="text" id="cpf" name="cpf" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="rg">RG</label>
+        <input type="text" id="rg" name="rg" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="emailPF">Email</label>
+        <input type="email" id="emailPF" name="emailPF" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="telefone">Telefone</label>
+        <input type="text" id="telefone" name="telefone" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="nascimento">Data de Nascimento</label>
+        <input type="date" id="nascimento" name="nascimento" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Cadastrar Cliente PF</button>
+</form>
+
+<hr>
+
+<!-- Grid para exibir Clientes PJ -->
+<h3>Clientes PJ Cadastrados</h3>
+<table class="table" id="gridClientePJ">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>CNPJ</th>
+            <th>Razão Social</th>
+            <th>Nome Fantasia</th>
+            <th>Email</th>
+            <th>Data Abertura</th>
+            <th>Ações</th> <!-- Coluna de Ações para Excluir e Editar -->
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Dados serão inseridos aqui -->
+    </tbody>
+</table>
+
+<hr>
+
+<!-- Grid para exibir Clientes PF -->
+<h3>Clientes PF Cadastrados</h3>
+<table class="table" id="gridClientePF">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>RG</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Data Nascimento</th>
+            <th>Ações</th> <!-- Coluna de Ações para Excluir e Editar -->
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Dados serão inseridos aqui -->
+    </tbody>
+</table>
+
+<script>
+    // Função para enviar o formulário de Cliente PJ
+    document.getElementById('formClientePJ').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const clientePJData = {
+            cnpj: document.getElementById('cnpj').value,
+            razaoSocial: document.getElementById('razaoSocial').value,
+            nomeFantasia: document.getElementById('nomeFantasia').value,
+            email: document.getElementById('emailPJ').value,
+            dataAbertura: document.getElementById('dataAbertura').value
+        };
+
+        try {
+            const response = await fetch('/CreateOrEditClientPJ', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(clientePJData)
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert('Cliente PJ cadastrado com sucesso!');
+                loadClientsPJ(); // Carrega novamente os clientes PJ após cadastro
+            } else {
+                alert('Erro: ' + result.Message);
+            }
+        } catch (error) {
+            console.error('Erro ao cadastrar Cliente PJ:', error);
+            alert('Erro ao cadastrar Cliente PJ');
+        }
+    });
+
+    // Função para enviar o formulário de Cliente PF
+    document.getElementById('formClientePF').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const clientePFData = {
+            nome: document.getElementById('nome').value,
+            cpf: document.getElementById('cpf').value,
+            rg: document.getElementById('rg').value,
+            email: document.getElementById('emailPF').value,
+            telefone: document.getElementById('telefone').value,
+            nascimento: document.getElementById('nascimento').value
+        };
+
+        try {
+            const response = await fetch('/CreateOrEditClientPF', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(clientePFData)
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert('Cliente PF cadastrado com sucesso!');
+                loadClientsPF(); // Carrega novamente os clientes PF após cadastro
+            } else {
+                alert('Erro: ' + result.Message);
+            }
+        } catch (error) {
+            console.error('Erro ao cadastrar Cliente PF:', error);
+            alert('Erro ao cadastrar Cliente PF');
+        }
+    });
+
+    // Função para carregar os clientes PJ no grid
+    async function loadClientsPJ() {
+        try {
+            const response = await fetch('/GetAllClientPJ');
+            const result = await response.json();
+            const grid = document.getElementById('gridClientePJ').getElementsByTagName('tbody')[0];
+            grid.innerHTML = ''; // Limpa o grid antes de adicionar novos dados
+
+            if (response.ok) {
+                result.Data.forEach(client => {
+                    const row = grid.insertRow();
+                    row.insertCell(0).textContent = client.id;
+                    row.insertCell(1).textContent = client.cnpj;
+                    row.insertCell(2).textContent = client.razaoSocial;
+                    row.insertCell(3).textContent = client.nomeFantasia;
+                    row.insertCell(4).textContent = client.email;
+                    row.insertCell(5).textContent = client.dataAbertura;
+                    const actionsCell = row.insertCell(6);
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Excluir';
+                    deleteButton.classList.add('btn', 'btn-danger');
+                    deleteButton.addEventListener('click', () => deleteClientPJ(client.id));
+                    actionsCell.appendChild(deleteButton);
+
+                    const editButton = document.createElement('button');
+                    editButton.textContent = 'Editar';
+                    editButton.classList.add('btn', 'btn-warning');
+                    editButton.addEventListener('click', () => editClientPJ(client.id));
+                    actionsCell.appendChild(editButton);
+                });
+            } else {
+                alert('Nenhum cliente PJ encontrado.');
+            }
+        } catch (error) {
+            console.error('Erro ao carregar Clientes PJ:', error);
+        }
+    }
+
+    // Função para carregar os clientes PF no grid
+    async function loadClientsPF() {
+        try {
+            const response = await fetch('/GetAllClientPF');
+            const result = await response.json();
+            const grid = document.getElementById('gridClientePF').getElementsByTagName('tbody')[0];
+            grid.innerHTML = ''; // Limpa o grid antes de adicionar novos dados
+
+            if (response.ok) {
+                result.Data.forEach(client => {
+                    const row = grid.insertRow();
+                    row.insertCell(0).textContent = client.id;
+                    row.insertCell(1).textContent = client.nome;
+                    row.insertCell(2).textContent = client.cpf;
+                    row.insertCell(3).textContent = client.rg;
+                    row.insertCell(4).textContent = client.email;
+                    row.insertCell(5).textContent = client.telefone;
+                    row.insertCell(6).textContent = client.nascimento;
+                    const actionsCell = row.insertCell(7);
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Excluir';
+                    deleteButton.classList.add('btn', 'btn-danger');
+                    deleteButton.addEventListener('click', () => deleteClientPF(client.id));
+                    actionsCell.appendChild(deleteButton);
+
+                    const editButton = document.createElement('button');
+                    editButton.textContent = 'Editar';
+                    editButton.classList.add('btn', 'btn-warning');
+                    editButton.addEventListener('click', () => editClientPF(client.id));
+                    actionsCell.appendChild(editButton);
+                });
+            } else {
+                alert('Nenhum cliente PF encontrado.');
+            }
+        } catch (error) {
+            console.error('Erro ao carregar Clientes PF:', error);
+        }
+    }
+
+    // Função para excluir Cliente PJ
+    async function deleteClientPJ(id) {
+        if (confirm('Tem certeza que deseja excluir este cliente PJ?')) {
+            try {
+                const response = await fetch(`/DeleteClientPJ/${id}`, {
+                        method: 'DELETE',
+                    });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert('Cliente PJ excluído com sucesso!');
+                    loadClientsPJ(); // Recarrega a lista de clientes PJ
+                } else {
+                    alert('Erro ao excluir Cliente PJ: ' + result.Message);
+                }
+            } catch (error) {
+                console.error('Erro ao excluir Cliente PJ:', error);
+                alert('Erro ao excluir Cliente PJ');
+            }
+        }
+    }
+
+    // Função para excluir Cliente PF
+    async function deleteClientPF(id) {
+        if (confirm('Tem certeza que deseja excluir este cliente PF?')) {
+            try {
+                const response = await fetch(`/DeleteClientPF/${id}`, {
+                    method: 'DELETE',
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert('Cliente PF excluído com sucesso!');
+                    loadClientsPF(); // Recarrega a lista de clientes PF
+                } else {
+                    alert('Erro ao excluir Cliente PF: ' + result.Message);
+                }
+            } catch (error) {
+                console.error('Erro ao excluir Cliente PF:', error);
+                alert('Erro ao excluir Cliente PF');
+            }
+        }
+    }
+
+    // Função para editar Cliente PJ
+    async function editClientPJ(id) {
+        try {
+            const response = await fetch(`/getByIdForEditPJ/${id}`);
+            const result = await response.json();
+            if (response.ok) {
+                const client = result.Data;
+                // Preenche o formulário de Cliente PJ com os dados do cliente
+                document.getElementById('cnpj').value = client.cnpj;
+                document.getElementById('razaoSocial').value = client.razaoSocial;
+                document.getElementById('nomeFantasia').value = client.nomeFantasia;
+                document.getElementById('emailPJ').value = client.email;
+                document.getElementById('dataAbertura').value = client.dataAbertura;
+                alert('Cliente PJ encontrado para edição.');
+            } else {
+                alert('Cliente PJ não encontrado.');
+            }
+        } catch (error) {
+            console.error('Erro ao carregar Cliente PJ para edição:', error);
+            alert('Erro ao carregar Cliente PJ para edição');
+        }
+    }
+
+    // Função para editar Cliente PF
+    async function editClientPF(id) {
+        try {
+            const response = await fetch(`/getByIdForEditPF/${id}`);
+            const result = await response.json();
+            if (response.ok) {
+                const client = result.Data;
+                // Preenche o formulário de Cliente PF com os dados do cliente
+                document.getElementById('nome').value = client.nome;
+                document.getElementById('cpf').value = client.cpf;
+                document.getElementById('rg').value = client.rg;
+                document.getElementById('emailPF').value = client.email;
+                document.getElementById('telefone').value = client.telefone;
+                document.getElementById('nascimento').value = client.nascimento;
+                alert('Cliente PF encontrado para edição.');
+            } else {
+                alert('Cliente PF não encontrado.');
+            }
+        } catch (error) {
+            console.error('Erro ao carregar Cliente PF para edição:', error);
+            alert('Erro ao carregar Cliente PF para edição');
+        }
+    }
+
+    // Carrega os clientes PJ e PF na página ao carregar
+    loadClientsPJ();
+    loadClientsPF();
+</script>
