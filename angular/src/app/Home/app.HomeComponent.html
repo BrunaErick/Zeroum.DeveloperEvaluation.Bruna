@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }}</title>
+
+  <style>
+    /* Estilos gerais */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      width: 80%;
+      margin: 30px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .title {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+
+    .alert {
+      background-color: #f8d7da;
+      color: #721c24;
+      padding: 20px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      border: 1px solid #f5c6cb;
+    }
+
+    .form-section {
+      margin-bottom: 40px;
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-top: 5px;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+    }
+
+    .btn-danger:hover {
+      background-color: #c82333;
+    }
+
+    /* Tabela de clientes */
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .table th, .table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .table th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .table tr:hover {
+      background-color: #f1f1f1;
+      cursor: pointer;
+    }
+
+    /* Adiciona espaçamento entre tabelas */
+    .client-list {
+      margin-top: 40px;
+    }
+
+    .client-list h3 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Título da página -->
+    <h1 class="title">{{ title }}</h1>
+
+    <!-- Exibição de mensagem de erro -->
+    <div *ngIf="errorMessage" class="alert">
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <!-- Seção para criar ou editar Cliente PF -->
+    <div class="form-section">
+      <h2>{{ selectedClientPF ? 'Editar Cliente PF' : 'Criar Cliente PF' }}</h2>
+      <form (ngSubmit)="onSubmitPF()">
+        <div class="form-group">
+          <label for="nomePF">Nome</label>
+          <input id="nomePF" [(ngModel)]="clientePF.nome" name="nome" type="text" placeholder="Nome" required class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="cpfPF">CPF</label>
+          <input id="cpfPF" [(ngModel)]="clientePF.cpf" name="cpf" type="text" placeholder="CPF" required class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="rgPF">RG</label>
+          <input id="rgPF" [(ngModel)]="clientePF.rg" name="rg" type="text" placeholder="RG" required class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="emailPF">Email</label>
+          <input id="emailPF" [(ngModel)]="clientePF.email" name="email" type="email" placeholder="Email" required class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="telefonePF">Telefone</label>
+          <input id="telefonePF" [(ngModel)]="clientePF.telefone" name="telefone" type="text" placeholder="Telefone" required class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="nascimentoPF">Nascimento</label>
+          <input id="nascimentoPF" [(ngModel)]="clientePF.nascimento" name="nascimento" type="date" required class="form-control" />
+        </div>
+
+        <button type="submit" [disabled]="!isFormValidPF()" class="btn btn-primary">{{ selectedClientPF ? 'Salvar Alterações' : 'Criar Cliente PF' }}</button>
+      </form>
+    </div>
+
+    <!-- Seção para criar ou editar Cliente PJ -->
+    <div class="form-section">
+      <h2>{{ selectedClientPJ ? 'Editar Cliente PJ' : 'Criar Cliente PJ' }}</h2>
+      <form (ngSubmit)="onSubmitPJ()">
+        <div class="form-group">
+          <label for="nomeFantasiaPJ">Nome Fantasia</label>
+          <input id="nomeFantasiaPJ" [(ngModel)]="clientePJ.nomeFantasia" name="nomeFantasia" type="text" placeholder="Nome Fantasia" required class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="cnpjPJ">CNPJ</label>
+          <input id="cnpjPJ" [(ngModel)]="clientePJ.cnpj" name="cnpj" type="text" placeholder="CNPJ" required class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="razaoSocialPJ">Razão Social</label>
+          <input id="razaoSocialPJ" [(ngModel)]="clientePJ.razaoSocial" name="razaoSocial" type="text" placeholder="Razão Social" required class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="emailPJ">Email</label>
+          <input id="emailPJ" [(ngModel)]="clientePJ.email" name="email" type="email" placeholder="Email" required class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label for="dataAberturaPJ">Data de Abertura</label>
+          <input id="dataAberturaPJ" [(ngModel)]="clientePJ.dataAbertura" name="dataAbertura" type="date" required class="form-control" />
+        </div>
+
+        <button type="submit" [disabled]="!isFormValidPJ()" class="btn btn-primary">{{ selectedClientPJ ? 'Salvar Alterações' : 'Criar Cliente PJ' }}</button>
+      </form>
+    </div>
+
+    <!-- Exibição da lista de Clientes PF -->
+    <div class="client-list">
+      <h3>Clientes PF</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let client of clientsPF" (click)="selectClientPF(client)">
+            <td>{{ client.nome }}</td>
+            <td>{{ client.cpf }}</td>
+            <td>
+              <button (click)="deleteClientPF(client.id)" class="btn btn-danger">Deletar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Exibição da lista de Clientes PJ -->
+    <div class="client-list">
+      <h3>Clientes PJ</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nome Fantasia</th>
+            <th>CNPJ</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let client of clientsPJ" (click)="selectClientPJ(client)">
+            <td>{{ client.nomeFantasia }}</td>
+            <td>{{ client.cnpj }}</td>
+            <td>
+              <button (click)="deleteClientPJ(client.id)" class="btn btn-danger">Deletar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+</html>

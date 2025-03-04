@@ -1,0 +1,52 @@
+{
+  "id": "63a4a777-0d3e-4065-ab6c-862f62faac50",
+  "template": "app",
+  "versions": {
+    "AbpFramework": "9.0.5",
+    "AbpStudio": "0.8.00",
+    "TargetDotnetFramework": "net9.0",
+    "AbpCommercial": "9.0.5",
+    "LeptonX": "4.0.6"
+  },
+  "modules": {
+    "Zeroum.DeveloperEvaluation.ABP.Bruna": {
+      "path": "Zeroum.DeveloperEvaluation.ABP.Bruna.abpmdl"
+    }
+  },
+  "runProfiles": {
+    "Default": {
+      "path": "etc/abp-studio/run-profiles/Default.abprun.json"
+    }
+  },
+  "options": {
+    "httpRequests": {
+      "ignoredUrls": [
+        "^/metrics$"
+      ]
+    }
+  },
+  "creatingStudioConfiguration": {
+    "template": "app",
+    "createdAbpStudioVersion": "0.9.23",
+    "tiered": "false",
+    "runInstallLibs": "true",
+    "useLocalReferences": "false",
+    "multiTenancy": "true",
+    "includeTests": "true",
+    "kubernetesConfiguration": "false",
+    "uiFramework": "angular",
+    "mobileFramework": "none",
+    "distributedEventBus": "none",
+    "databaseProvider": "ef",
+    "runDbMigrator": "true",
+    "databaseManagementSystem": "sqlserver",
+    "separateTenantSchema": "false",
+    "createInitialMigration": "true",
+    "theme": "leptonx-lite",
+    "themeStyle": "",
+    "progressiveWebApp": "false",
+    "runProgressiveWebAppSupport": "false",
+    "publicWebsite": "false",
+    "socialLogin": ""
+  }
+}

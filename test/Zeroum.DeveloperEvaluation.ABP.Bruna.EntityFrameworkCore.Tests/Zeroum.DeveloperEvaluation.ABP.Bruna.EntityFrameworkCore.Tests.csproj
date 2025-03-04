@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Zeroum.DeveloperEvaluation.ABP.Bruna</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Zeroum.DeveloperEvaluation.ABP.Bruna.EntityFrameworkCore\Zeroum.DeveloperEvaluation.ABP.Bruna.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\Zeroum.DeveloperEvaluation.ABP.Bruna.Application.Tests\Zeroum.DeveloperEvaluation.ABP.Bruna.Application.Tests.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="8.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+  </ItemGroup>
+
+</Project>

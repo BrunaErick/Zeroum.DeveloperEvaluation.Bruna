@@ -1,0 +1,101 @@
+{
+  "template": "app",
+  "imports": {
+    "Volo.Abp.LeptonXLiteTheme": {
+      "version": "4.0.6",
+      "isInstalled": true
+    },
+    "Volo.Abp.Account": {
+      "version": "9.0.5",
+      "isInstalled": true
+    },
+    "Volo.Abp.OpenIddict": {
+      "version": "9.0.5",
+      "isInstalled": true
+    },
+    "Volo.Abp.Identity": {
+      "version": "9.0.5",
+      "isInstalled": true
+    },
+    "Volo.Abp.TenantManagement": {
+      "version": "9.0.5",
+      "isInstalled": true
+    },
+    "Volo.Abp.SettingManagement": {
+      "version": "9.0.5",
+      "isInstalled": true
+    },
+    "Volo.Abp.PermissionManagement": {
+      "version": "9.0.5",
+      "isInstalled": true
+    },
+    "Volo.Abp.FeatureManagement": {
+      "version": "9.0.5",
+      "isInstalled": true
+    }
+  },
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {}
+    }
+  },
+  "packages": {
+    "Zeroum.DeveloperEvaluation.ABP.Bruna.Application": {
+      "path": "src/Zeroum.DeveloperEvaluation.ABP.Bruna.Application/Zeroum.DeveloperEvaluation.ABP.Bruna.Application.abppkg",
+      "folder": "src"
+    },
+    "Zeroum.DeveloperEvaluation.ABP.Bruna.Application.Tests": {
+      "path": "test/Zeroum.DeveloperEvaluation.ABP.Bruna.Application.Tests/Zeroum.DeveloperEvaluation.ABP.Bruna.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "Zeroum.DeveloperEvaluation.ABP.Bruna.Domain.Shared": {
+      "path": "src/Zeroum.DeveloperEvaluation.ABP.Bruna.Domain.Shared/Zeroum.DeveloperEvaluation.ABP.Bruna.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "Zeroum.DeveloperEvaluation.ABP.Bruna.Application.Contracts": {
+      "path": "src/Zeroum.DeveloperEvaluation.ABP.Bruna.Application.Contracts/Zeroum.DeveloperEvaluation.ABP.Bruna.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "Zeroum.DeveloperEvaluation.ABP.Bruna.HttpApi": {
+      "path": "src/Zeroum.DeveloperEvaluation.ABP.Bruna.HttpApi/Zeroum.DeveloperEvaluation.ABP.Bruna.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "Zeroum.DeveloperEvaluation.ABP.Bruna.HttpApi.Client": {
+      "path": "src/Zeroum.DeveloperEvaluation.ABP.Bruna.HttpApi.Client/Zeroum.DeveloperEvaluation.ABP.Bruna.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "Zeroum.DeveloperEvaluation.ABP.Bruna.EntityFrameworkCore.Tests": {
+      "path": "test/Zeroum.DeveloperEvaluation.ABP.Bruna.EntityFrameworkCore.Tests/Zeroum.DeveloperEvaluation.ABP.Bruna.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "Zeroum.DeveloperEvaluation.ABP.Bruna.EntityFrameworkCore": {
+      "path": "src/Zeroum.DeveloperEvaluation.ABP.Bruna.EntityFrameworkCore/Zeroum.DeveloperEvaluation.ABP.Bruna.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "Zeroum.DeveloperEvaluation.ABP.Bruna.TestBase": {
+      "path": "test/Zeroum.DeveloperEvaluation.ABP.Bruna.TestBase/Zeroum.DeveloperEvaluation.ABP.Bruna.TestBase.abppkg",
+      "folder": "test"
+    },
+    "Zeroum.DeveloperEvaluation.ABP.Bruna.Domain.Tests": {
+      "path": "test/Zeroum.DeveloperEvaluation.ABP.Bruna.Domain.Tests/Zeroum.DeveloperEvaluation.ABP.Bruna.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "Zeroum.DeveloperEvaluation.ABP.Bruna.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/Zeroum.DeveloperEvaluation.ABP.Bruna.HttpApi.Client.ConsoleTestApp/Zeroum.DeveloperEvaluation.ABP.Bruna.HttpApi.Client.ConsoleTestApp.abppkg",
+      "folder": "test"
+    },
+    "Zeroum.DeveloperEvaluation.ABP.Bruna.DbMigrator": {
+      "path": "src/Zeroum.DeveloperEvaluation.ABP.Bruna.DbMigrator/Zeroum.DeveloperEvaluation.ABP.Bruna.DbMigrator.abppkg",
+      "folder": "src"
+    },
+    "Zeroum.DeveloperEvaluation.ABP.Bruna.HttpApi.Host": {
+      "path": "src/Zeroum.DeveloperEvaluation.ABP.Bruna.HttpApi.Host/Zeroum.DeveloperEvaluation.ABP.Bruna.HttpApi.Host.abppkg",
+      "folder": "src"
+    },
+    "Zeroum.DeveloperEvaluation.ABP.Bruna.Domain": {
+      "path": "src/Zeroum.DeveloperEvaluation.ABP.Bruna.Domain/Zeroum.DeveloperEvaluation.ABP.Bruna.Domain.abppkg",
+      "folder": "src"
+    }
+  }
+}

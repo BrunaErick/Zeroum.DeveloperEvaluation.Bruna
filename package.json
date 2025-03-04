@@ -1,0 +1,20 @@
+{
+  "name": "zeroum.developerevaluation.abp.bruna",
+  "version": "1.0.0",
+  "description": "This is a layered startup solution based on [Domain Driven Design (DDD)](https://docs.abp.io/en/abp/latest/Domain-Driven-Design) practises. All the fundamental ABP modules are already installed. Check the [Application Startup Template](https://abp.io/docs/latest/startup-templates/application/index) documentation for more info.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@abp/ng.core": "^9.0.5",
+    "@abp/ng.theme.lepton-x": "^4.0.6",
+    "@angular/core": "^19.2.0"
+  }
+}

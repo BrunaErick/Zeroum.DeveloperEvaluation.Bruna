@@ -1,0 +1,23 @@
+﻿{
+  "applications": {
+    "Zeroum.DeveloperEvaluation.ABP.Bruna.HttpApi.Host": {
+      "type": "dotnet-project",
+      "launchUrl": "https://localhost:44303",
+      "path": "../../../src/Zeroum.DeveloperEvaluation.ABP.Bruna.HttpApi.Host/Zeroum.DeveloperEvaluation.ABP.Bruna.HttpApi.Host.csproj",
+      "kubernetesService": ".*-httpapihost$",
+      "execution": {
+        "order": 4
+      }
+    },
+    "Zeroum.DeveloperEvaluation.ABP.Bruna.Angular": {
+      "type": "cli",
+      "workingDirectory": "../../../angular",
+      "startCommand": "./start.ps1",
+      "launchUrl": "http://localhost:4200",
+      "kubernetesService": ".*-angular$",
+      "execution": {
+        "order": 2
+      }    
+    }
+  }
+}

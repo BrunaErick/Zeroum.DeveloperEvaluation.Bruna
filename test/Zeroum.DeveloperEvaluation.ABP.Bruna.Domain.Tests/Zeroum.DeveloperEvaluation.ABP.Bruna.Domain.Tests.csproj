@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Zeroum.DeveloperEvaluation.ABP.Bruna</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Zeroum.DeveloperEvaluation.ABP.Bruna.Domain\Zeroum.DeveloperEvaluation.ABP.Bruna.Domain.csproj" />
+    <ProjectReference Include="..\Zeroum.DeveloperEvaluation.ABP.Bruna.TestBase\Zeroum.DeveloperEvaluation.ABP.Bruna.TestBase.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="8.1.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="MockQueryable.Core" Version="7.0.3" />
+    <PackageReference Include="Moq" Version="4.20.72" />
+  </ItemGroup>
+
+</Project>

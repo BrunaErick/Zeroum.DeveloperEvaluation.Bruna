@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Chrome against localhost",
+      "type": "chrome",  // Use "chrome" no lugar de "pwa-chrome"
+      "request": "launch",
+      "url": "http://localhost:4200",  // O local onde sua aplicação Angular está rodando
+      "webRoot": "${workspaceFolder}/src",  // Caminho para a pasta src do seu projeto
+      "sourceMapPathOverrides": {
+        "webpack:///*": "${workspaceFolder}/src/*"
+      }
+    }
+  ]
+}

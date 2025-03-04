@@ -1,0 +1,6 @@
+@Zeroum.DeveloperEvaluation.ABP.Bruna.WebApi_HostAddress = http://localhost:5106
+
+GET {{Zeroum.DeveloperEvaluation.ABP.Bruna.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
