@@ -11,7 +11,7 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
+      background-color: #2d3656; /* Atualizado para o novo background do body */
     }
 
     .container {
@@ -40,7 +40,7 @@
 
     .form-section {
       margin-bottom: 40px;
-      background-color: #f8f9fa;
+      background-color: #f2f3f5; /* Atualizado para o novo background da form-section */
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -58,12 +58,14 @@
     }
 
     .form-control {
-      width: 100%;
+      width: 97%;  /* Ajustando a largura para 97% */
       padding: 12px;
       font-size: 16px;
       border: 1px solid #ccc;
       border-radius: 8px;
       margin-top: 5px;
+      margin-right: auto;
+      margin-left: auto;
     }
 
     button {
@@ -75,18 +77,18 @@
     }
 
     button:disabled {
-      background-color: #ccc;
+      background-color: #39b53f;
       cursor: not-allowed;
     }
 
     .btn-primary {
-      background-color: #007bff;
+      background-color: #39b53f; 
       color: white;
       border: none;
     }
 
     .btn-primary:hover {
-      background-color: #0056b3;
+      background-color: #267a2a; /* Cor de hover mais escura */
     }
 
     .btn-danger {
@@ -113,7 +115,7 @@
     }
 
     .table th {
-      background-color: #007bff;
+      background-color: #274f7a; /* Atualizado para o novo background do header dos grids */
       color: white;
     }
 
@@ -138,7 +140,7 @@
 
   <div class="container">
     <!-- Título da página -->
-    <h1 class="title">{{ title }}</h1>
+    <h1 class="title">Cadastro de Clientes</h1>
 
     <!-- Exibição de mensagem de erro -->
     <div *ngIf="errorMessage" class="alert">
@@ -146,7 +148,7 @@
     </div>
 
     <!-- Seção para criar ou editar Cliente PF -->
-    <div class="form-section">
+    <div class="form-section" id="formPF">
       <h2>{{ selectedClientPF ? 'Editar Cliente PF' : 'Criar Cliente PF' }}</h2>
       <form (ngSubmit)="onSubmitPF()">
         <div class="form-group">
@@ -184,7 +186,7 @@
     </div>
 
     <!-- Seção para criar ou editar Cliente PJ -->
-    <div class="form-section">
+    <div class="form-section" id="formPJ">
       <h2>{{ selectedClientPJ ? 'Editar Cliente PJ' : 'Criar Cliente PJ' }}</h2>
       <form (ngSubmit)="onSubmitPJ()">
         <div class="form-group">
@@ -224,6 +226,10 @@
           <tr>
             <th>Nome</th>
             <th>CPF</th>
+            <th>RG</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Nascimento</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -231,6 +237,10 @@
           <tr *ngFor="let client of clientsPF" (click)="selectClientPF(client)">
             <td>{{ client.nome }}</td>
             <td>{{ client.cpf }}</td>
+            <td>{{ client.rg }}</td>
+            <td>{{ client.email }}</td>
+            <td>{{ client.telefone }}</td>
+            <td>{{ client.nascimento | date:'yyyy-MM-dd' }}</td>
             <td>
               <button (click)="confirmDeleteClientPF(client.id)" class="btn btn-danger">Deletar</button>
             </td>
@@ -247,6 +257,9 @@
           <tr>
             <th>Nome Fantasia</th>
             <th>CNPJ</th>
+            <th>Razão Social</th>
+            <th>Email</th>
+            <th>Data de Abertura</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -254,6 +267,9 @@
           <tr *ngFor="let client of clientsPJ" (click)="selectClientPJ(client)">
             <td>{{ client.nomeFantasia }}</td>
             <td>{{ client.cnpj }}</td>
+            <td>{{ client.razaoSocial }}</td>
+            <td>{{ client.email }}</td>
+            <td>{{ client.dataAbertura | date:'yyyy-MM-dd' }}</td>
             <td>
               <button (click)="confirmDeleteClientPJ(client.id)" class="btn btn-danger">Deletar</button>
             </td>
@@ -278,6 +294,27 @@
         // Chama o método de exclusão do cliente PJ
         deleteClientPJ(clientId);
       }
+    }
+
+    // Função para rolar até o formulário
+    function scrollToForm(formId) {
+      setTimeout(() => {
+        const formElement = document.getElementById(formId);
+        if (formElement) {
+          formElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          formElement.querySelector('input')?.focus(); // Foca no primeiro campo de input
+        }
+      }, 100); // Espera o ciclo de renderização do Angular
+    }
+
+    // Ao selecionar um cliente PF
+    function selectClientPF(client) {
+      scrollToForm('formPF');
+    }
+
+    // Ao selecionar um cliente PJ
+    function selectClientPJ(client) {
+      scrollToForm('formPJ');
     }
   </script>
 </body>
