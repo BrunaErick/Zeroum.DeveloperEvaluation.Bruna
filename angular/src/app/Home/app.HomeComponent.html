@@ -232,7 +232,7 @@
             <td>{{ client.nome }}</td>
             <td>{{ client.cpf }}</td>
             <td>
-              <button (click)="deleteClientPF(client.id)" class="btn btn-danger">Deletar</button>
+              <button (click)="confirmDeleteClientPF(client.id)" class="btn btn-danger">Deletar</button>
             </td>
           </tr>
         </tbody>
@@ -255,7 +255,7 @@
             <td>{{ client.nomeFantasia }}</td>
             <td>{{ client.cnpj }}</td>
             <td>
-              <button (click)="deleteClientPJ(client.id)" class="btn btn-danger">Deletar</button>
+              <button (click)="confirmDeleteClientPJ(client.id)" class="btn btn-danger">Deletar</button>
             </td>
           </tr>
         </tbody>
@@ -263,5 +263,22 @@
     </div>
   </div>
 
+  <script>
+    // Função para confirmação antes de deletar o cliente PF
+    function confirmDeleteClientPF(clientId) {
+      if (window.confirm('Tem certeza que deseja excluir este cliente PF?')) {
+        // Chama o método de exclusão do cliente PF
+        deleteClientPF(clientId);
+      }
+    }
+
+    // Função para confirmação antes de deletar o cliente PJ
+    function confirmDeleteClientPJ(clientId) {
+      if (window.confirm('Tem certeza que deseja excluir este cliente PJ?')) {
+        // Chama o método de exclusão do cliente PJ
+        deleteClientPJ(clientId);
+      }
+    }
+  </script>
 </body>
 </html>

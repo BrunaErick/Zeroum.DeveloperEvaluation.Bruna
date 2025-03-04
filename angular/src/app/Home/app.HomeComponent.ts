@@ -13,8 +13,8 @@ interface ApiResponse {
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, FormsModule],  // Adicione o FormsModule aqui
-  templateUrl: './app.HomeComponent.html',
-  styleUrls: ['./app.HomeComponent.css']
+  templateUrl: './app.HomeComponent.html',  // Ajuste o caminho conforme necessário
+  styleUrls: ['./app.HomeComponent.css']   // Ajuste o caminho conforme necessário
 })
 export class AppHomeComponent implements OnInit {
   title = 'Home';
@@ -102,9 +102,11 @@ export class AppHomeComponent implements OnInit {
     if (this.isFormValidPF()) {
       try {
         let response;
-        if (this.selectedClientPF) {
+        let isEdit = false; 
+        if (this.selectedClientPF && this.selectedClientPF.id) {
+          isEdit = true;
           // Editar cliente PF
-          response = await axios.put(`https://localhost:7297/Clients/CreateOrEditClientPF/${this.selectedClientPF.id}`, this.clientePF);
+          response = await axios.post('https://localhost:7297/Clients/CreateOrEditClientPF', this.clientePF);
         } else {
           // Criar novo cliente PF
           response = await axios.post('https://localhost:7297/Clients/CreateOrEditClientPF', this.clientePF);
@@ -114,12 +116,12 @@ export class AppHomeComponent implements OnInit {
         if (data.success) {
           this.resetFormPF();  // Limpar o formulário
           this.getClientsPF();  // Recarregar lista
-          alert(this.selectedClientPF ? 'Cliente PF atualizado com sucesso!' : 'Cliente PF criado com sucesso!');
+          alert(isEdit? 'Cliente PF atualizado com sucesso!' : 'Cliente PF criado com sucesso!');
         } else {
           this.errorMessage = data.message;
         }
       } catch (error) {
-        this.errorMessage = 'Erro ao criar ou editar cliente PF.';
+        this.errorMessage = 'Erro ao criar ou editar cliente PF.' + error;
         console.error(error);
       }
     } else {
@@ -132,9 +134,11 @@ export class AppHomeComponent implements OnInit {
     if (this.isFormValidPJ()) {
       try {
         let response;
-        if (this.selectedClientPJ) {
+        let isEdit = false; 
+        if (this.selectedClientPJ && this.selectedClientPJ.id) {
+          isEdit = true;
           // Editar cliente PJ
-          response = await axios.put(`https://localhost:7297/Clients/CreateOrEditClientPJ/${this.selectedClientPJ.id}`, this.clientePJ);
+          response = await axios.post('https://localhost:7297/Clients/CreateOrEditClientPJ', this.clientePJ);
         } else {
           // Criar novo cliente PJ
           response = await axios.post('https://localhost:7297/Clients/CreateOrEditClientPJ', this.clientePJ);
@@ -144,7 +148,7 @@ export class AppHomeComponent implements OnInit {
         if (data.success) {
           this.resetFormPJ();  // Limpar o formulário
           this.getClientsPJ();  // Recarregar lista
-          alert(this.selectedClientPJ ? 'Cliente PJ atualizado com sucesso!' : 'Cliente PJ criado com sucesso!');
+          alert(isEdit ? 'Cliente PJ atualizado com sucesso!' : 'Cliente PJ criado com sucesso!');
         } else {
           this.errorMessage = data.message;
         }
@@ -197,6 +201,22 @@ export class AppHomeComponent implements OnInit {
     } catch (error) {
       this.errorMessage = 'Erro ao deletar cliente PF.';
       console.error(error);
+    }
+  }
+
+  // Deletar cliente PF com confirmação
+  confirmDeleteClientPF(id: number): void {
+    const confirmation = window.confirm('Você tem certeza que deseja excluir este cliente PF?');
+    if (confirmation) {
+      this.deleteClientPF(id);
+    }
+  }
+
+  // Deletar cliente PJ com confirmação
+  confirmDeleteClientPJ(id: number): void {
+    const confirmation = window.confirm('Você tem certeza que deseja excluir este cliente PJ?');
+    if (confirmation) {
+      this.deleteClientPJ(id);
     }
   }
 
